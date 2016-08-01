@@ -5,14 +5,16 @@ def checkGtk(program_name):
     """
 
     try:
-        program = subprocess.Popen([program_name]) #Start the program with the given name/
+        program = subprocess.Popen([program_name])  # Start the program with the given name
     except OSError:
         print "Enter a valid application name"
 
-    executable_path = subprocess.check_output(['readlink', '/proc/'+str(program.pid)+'/exe']) #Get the path of the executable by using pid of program.
-    executable_path = executable_path.strip('\n');
+    # Get the path of the executable by using pid of program.
+    executable_path = subprocess.check_output(['readlink', '/proc/'+str(program.pid)+'/exe'])
+    executable_path = executable_path.strip('\n')
 
-    isGtk = subprocess.call("ldd " + executable_path + " | grep gtk", shell='True') #Check program dependencies to check whether application is Gtk.
+    # Check program dependencies to check whether application is Gtk.
+    isGtk = subprocess.call("ldd " + executable_path + " | grep gtk", shell='True')
 
     if isGtk == 0:
         print "Application is GTK."
