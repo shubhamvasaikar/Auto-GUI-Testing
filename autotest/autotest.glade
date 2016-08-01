@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.20.0 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkWindow" id="MyWindow">
+    <property name="width_request">640</property>
+    <property name="height_request">320</property>
+    <property name="can_focus">False</property>
+    <signal name="delete-event" handler="on_MyWindow_delete_event" swapped="no"/>
+    <child>
+      <object class="GtkGrid" id="MyContainer">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="row_spacing">20</property>
+        <property name="column_spacing">20</property>
+        <property name="row_homogeneous">True</property>
+        <child>
+          <object class="GtkEntry" id="prgmName">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">baseline</property>
+            <property name="valign">center</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="placeholder_text" translatable="yes">Enter program name here</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="locale">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">baseline</property>
+            <property name="valign">center</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="placeholder_text" translatable="yes">Enter locale</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="startButton">
+            <property name="label" translatable="yes">Start</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">baseline</property>
+            <property name="valign">center</property>
+            <property name="margin_right">10</property>
+            <signal name="clicked" handler="on_startButton_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="display">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="halign">baseline</property>
+            <property name="valign">center</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
+            <property name="width">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
