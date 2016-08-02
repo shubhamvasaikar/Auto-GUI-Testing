@@ -1,11 +1,14 @@
 import subprocess
 
-def checkGtk(program_name):
-    """Checks whether given program_name is a GTK application or not.
+def checkGtk(program_name, locale_code):
+    """Starts a given program in the specified locale.
+       Checks whether given program_name is a GTK application or not.
     """
 
     try:
-        program = subprocess.Popen([program_name])  # Start the program with the given name
+        locale_var = "LANG='"+locale_code+"' "
+        # Start the program with the given name
+        program = subprocess.Popen([locale_var + program_name], shell=True)  
     except OSError:
         print "Enter a valid application name"
         isGtk = 1
@@ -26,7 +29,8 @@ def test_checkGtk():
 def main():
 
     program_name = raw_input("Enter program name: ")
-    isGtk = checkGtk(program_name)
+    locale_code = raw_input("Enter locale code: ")
+    isGtk = checkGtk(program_name, locale_code)
     if isGtk == 0:
         print "Application is GTK."
     else:
