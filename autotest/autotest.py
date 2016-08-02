@@ -1,5 +1,6 @@
 import gi
 import checkgtk
+import checklocales
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -15,14 +16,27 @@ class Handler:
         # builder.get_object used to get reference of gui objects.
         prgmNameEntry = builder.get_object("prgmName")
         localeEntry = builder.get_object("locale")
-        displayEntry = builder.get_object("display")
+        label0Entry = builder.get_object("label0")
+        label1Entry = builder.get_object("label1")
+        
+        # Set some frequently used variables
+        program_name = prgmNameEntry.get_text()
+        locale = localeEntry.get_text()
 
         # Start the program in given locale.
-        isGtk = checkgtk.checkGtk(prgmNameEntry.get_text(), localeEntry.get_text())
+        isGtk = checkgtk.checkGtk(program_name, locale)
         if isGtk == 0:
-            displayEntry.set_text("Program is GTK.")
+            label0Entry.set_text("Program is GTK.")
         else:
-            displayEntry.set_text("Program is non-GTK.")
+            label0Entry.set_text("Program is non-GTK.")
+
+        # Check the presence of l10n files for all locales
+        locale_absent = checklocales.checkLocales(program_name)
+        if len(locale_absent) == 0:
+            label1Entry.set_text("All supported locales present.")
+        else:
+            locale_absent = ', '.join(locale_absent)
+            label1Entry.set_text("These locales are not present: "+locale_absent)
 
 builder = Gtk.Builder()
 builder.add_from_file("autotest.glade")
