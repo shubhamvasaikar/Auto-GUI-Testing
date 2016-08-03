@@ -24,6 +24,7 @@ class Handler:
         locale = localeEntry.get_text()
 
         # Start the program in given locale.
+        isGtk = 0
         isGtk = checkgtk.checkGtk(program_name, locale)
         if isGtk == 0:
             label0Entry.set_text("Program is GTK.")
