@@ -2,14 +2,63 @@
 <!-- Generated with glade 3.20.0 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
-  <object class="GtkWindow" id="mainWindow">
+  <object class="GtkWindow" id="autoTest">
     <property name="can_focus">False</property>
+    <property name="border_width">10</property>
+    <property name="title" translatable="yes">Running Tests...</property>
+    <child>
+      <object class="GtkBox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkTextView" id="displayTests">
+            <property name="width_request">320</property>
+            <property name="height_request">320</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="border_width">0</property>
+            <property name="editable">False</property>
+            <property name="cursor_visible">False</property>
+            <property name="monospace">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="pofilterBtn">
+            <property name="label" translatable="yes">Open pofilter directory.</property>
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">start</property>
+            <signal name="clicked" handler="open_pofilter_dir" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">10</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="configTest">
+    <property name="can_focus">False</property>
+    <property name="border_width">10</property>
+    <property name="title" translatable="yes">Auto-GUI-Testing</property>
     <signal name="delete-event" handler="on_close" swapped="no"/>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
+        <property name="spacing">1</property>
         <child>
           <object class="GtkGrid">
             <property name="visible">True</property>
@@ -28,26 +77,25 @@
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="locale">
+              <object class="GtkComboBoxText" id="localeComboBox">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="placeholder_text" translatable="yes">Enter locale code</property>
+                <property name="can_focus">False</property>
+                <property name="tearoff_title" translatable="yes">Select locale</property>
+                <items>
+                  <item id="1" translatable="yes">pt_BR</item>
+                  <item id="2" translatable="yes">zh_CN</item>
+                  <item id="3" translatable="yes">zh_TW</item>
+                  <item id="4" translatable="yes">ja_JP</item>
+                  <item id="5" translatable="yes">ko_KR</item>
+                  <item id="6" translatable="yes">fr_FR</item>
+                  <item id="7" translatable="yes">de_DE</item>
+                  <item id="8" translatable="yes">it_IT</item>
+                  <item id="9" translatable="yes">ru_RU</item>
+                  <item id="10" translatable="yes">es_ES</item>
+                </items>
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="startButton">
-                <property name="label" translatable="yes">Start</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <signal name="clicked" handler="on_start" swapped="no"/>
-              </object>
-              <packing>
-                <property name="left_attach">2</property>
                 <property name="top_attach">0</property>
               </packing>
             </child>
@@ -55,72 +103,85 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="padding">20</property>
+            <property name="padding">15</property>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label0">
+          <object class="GtkLabel">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="wrap">True</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="padding">20</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="label1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="padding">20</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="column_spacing">10</property>
-            <child>
-              <object class="GtkLabel" id="labelPofilter">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="xalign">0.029999999329447746</property>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btnPofilter">
-                <property name="label" translatable="yes">Open Directory</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <signal name="clicked" handler="open_pofilter_dir" swapped="no"/>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">Select tests to be performed:</property>
           </object>
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="padding">20</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="gtkCheckBtn">
+            <property name="label" translatable="yes">Check if application is GTK or non-GTK.</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="halign">start</property>
+            <property name="image_position">right</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="localeCheckBtn">
+            <property name="label" translatable="yes">Check if language pack is present.</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="halign">start</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
             <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkCheckButton" id="pofilterCheckBtn">
+            <property name="label" translatable="yes">Extract .po file and run pofilter on it.</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">False</property>
+            <property name="halign">start</property>
+            <property name="active">True</property>
+            <property name="draw_indicator">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="startBtn">
+            <property name="label" translatable="yes">Start tests</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="clicked" handler="on_start" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="padding">5</property>
+            <property name="position">5</property>
           </packing>
         </child>
       </object>

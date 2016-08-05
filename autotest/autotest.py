@@ -21,42 +21,51 @@ class Handler:
     def on_start(self, button):
         # builder.get_object used to get reference of gui objects.
         prgmNameEntry = builder.get_object("prgmName")
-        localeEntry = builder.get_object("locale")
-        label0Entry = builder.get_object("label0")
-        label1Entry = builder.get_object("label1")
-        labelPofilter = builder.get_object("labelPofilter")
-        btnPofilter = builder.get_object("btnPofilter")
+        localeCombo = builder.get_object("localeComboBox")
+        displayTextView = builder.get_object("displayTests")
 
         # Set some frequently used variables
         program_name = prgmNameEntry.get_text()
-        locale = localeEntry.get_text()
+        locale = localeCombo.get_active_text()
+
+        autoTestWindow.present()
 
         # Start the program in given locale.
         isGtk = 0
         isGtk = checkgtk.checkGtk(program_name, locale)
-        if isGtk == 0:
-            label0Entry.set_text("Program is GTK.")
-        else:
-            label0Entry.set_text("Program is non-GTK.")
+        if (builder.get_object("gtkCheckBtn").get_active()):
+            if isGtk == 0:
+                end_iter = displayTextView.get_buffer().get_end_iter()
+                displayTextView.get_buffer().insert(end_iter, "Program is GTK.\n")
+            else:
+                end_iter = displayTextView.get_buffer().get_end_iter()
+                displayTextView.get_buffer().insert(end_iter, "Program is non-GTK.\n")
 
         # Check the presence of l10n files for all locales
-        locale_absent = checklocales.checkLocales(program_name)
-        if len(locale_absent) == 0:
-            label1Entry.set_text("All supported locales present.")
-        else:
-            locale_absent = ', '.join(locale_absent)
-            label1Entry.set_text("These locales are not present: "+locale_absent)
+        if (builder.get_object("localeCheckBtn").get_active()):
+            locale_absent = checklocales.checkLocales(program_name)
+            if len(locale_absent) == 0:
+                end_iter = displayTextView.get_buffer().get_end_iter()
+                displayTextView.get_buffer().insert(end_iter, "All locales are present.\n")
+            else:
+                locale_absent = ', '.join(locale_absent)
+                end_iter = displayTextView.get_buffer().get_end_iter()
+                displayTextView.get_buffer().insert(end_iter, "These locales are not present: "+locale_absent+"\n")
 
-        qualitychecks.extractPoFiles(program_name, locale_absent)
-        qualitychecks.runPofilter(program_name, locale_absent)
-        labelPofilter.set_text("Pofilter run successfully.")
-        btnPofilter.set_sensitive(True)
+        if (builder.get_object("pofilterCheckBtn").get_active()):
+            qualitychecks.extractPoFiles(program_name, locale_absent)
+            qualitychecks.runPofilter(program_name, locale_absent)
+            end_iter = displayTextView.get_buffer().get_end_iter()
+            displayTextView.get_buffer().insert(end_iter, "Pofilter run successfully.\n")
+            btnPofilter = builder.get_object("pofilterBtn")
+            btnPofilter.set_sensitive(True)
 
 builder = Gtk.Builder()
 builder.add_from_file("autotest.glade")
 builder.connect_signals(Handler())
 
-window = builder.get_object("mainWindow")
-window.show_all()
+configTestWindow = builder.get_object("configTest")
+autoTestWindow = builder.get_object("autoTest")
+configTestWindow.show_all()
 
 Gtk.main()
