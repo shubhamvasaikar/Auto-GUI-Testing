@@ -13,6 +13,10 @@ class Handler:
     def on_close(self, *args):
         Gtk.main_quit(*args)
 
+    def hide_window(self, window, event):
+        window.hide()
+        return True
+
     # To open Nautilus window to view pofilter files.
     def open_pofilter_dir(self, button):
         subprocess.Popen("nautilus ~/.autotest/pofilter_files", shell=True)
@@ -23,12 +27,14 @@ class Handler:
         prgmNameEntry = builder.get_object("prgmName")
         localeCombo = builder.get_object("localeComboBox")
         displayTextView = builder.get_object("displayTests")
+        locale_absent = None
 
         # Set some frequently used variables
         program_name = prgmNameEntry.get_text()
         locale = localeCombo.get_active_text()
 
         autoTestWindow.present()
+        displayTextView.get_buffer().set_text("")
 
         # Start the program in given locale.
         isGtk = 0
