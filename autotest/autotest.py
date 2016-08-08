@@ -2,7 +2,7 @@ import gi
 import subprocess
 import checkgtk
 import checklocales
-#import qualitychecks
+import qualitychecks
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -72,8 +72,8 @@ class Handler:
                 displayTextView.get_buffer().insert(end_iter, "Required locale is not present.\n")
 
         if (builder.get_object("pofilterCheckBtn").get_active()):
-            qualitychecks.extractPoFiles(program_name, locale_absent)
-            qualitychecks.runPofilter(program_name, locale_absent)
+            qualitychecks.extractPoFiles(program_name, locales[locale_id])
+            qualitychecks.runPofilter(program_name, locales[locale_id])
             end_iter = displayTextView.get_buffer().get_end_iter()
             displayTextView.get_buffer().insert(end_iter, "Pofilter run successfully.\n")
             btnPofilter = builder.get_object("pofilterBtn")
