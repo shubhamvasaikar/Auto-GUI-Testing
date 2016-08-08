@@ -44,8 +44,6 @@ class Handler:
         program_name = prgmNameEntry.get_text().strip()
         locale = localeCombo.get_active_text()
         locale_id = localeCombo.get_active()
-        print locale_id
-        print locales[locale_id]
 
         autoTestWindow.present()
         displayTextView.get_buffer().set_text("")
