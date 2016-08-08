@@ -41,7 +41,7 @@ class Handler:
         displayTextView = builder.get_object("displayTests")
 
         # Set some frequently used variables
-        program_name = prgmNameEntry.get_text()
+        program_name = prgmNameEntry.get_text().strip()
         locale = localeCombo.get_active_text()
         locale_id = localeCombo.get_active()
         print locale_id
@@ -61,7 +61,7 @@ class Handler:
                 end_iter = displayTextView.get_buffer().get_end_iter()
                 displayTextView.get_buffer().insert(end_iter, "Program is non-GTK.\n")
 
-        # Check the presence of l10n files for all locales
+        # Check the presence of l10n files for all locales.
         if (builder.get_object("localeCheckBtn").get_active()):
             locale_present = checklocales.checkLocales(program_name, locales[locale_id])
             if locale_present:
@@ -71,6 +71,7 @@ class Handler:
                 end_iter = displayTextView.get_buffer().get_end_iter()
                 displayTextView.get_buffer().insert(end_iter, "Required locale is not present.\n")
 
+        # Extract the .po file and run pofilter on it.
         if (builder.get_object("pofilterCheckBtn").get_active()):
             qualitychecks.extractPoFiles(program_name, locales[locale_id])
             qualitychecks.runPofilter(program_name, locales[locale_id])
