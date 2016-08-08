@@ -40,3 +40,13 @@ def runPofilter(program_name, locale):
     # pofilter is used to run various quality checks on .po files.
     command = "pofilter -i "+input_path+" -o "+output_path
     subprocess.call(command, shell=True)
+
+
+def test_extractPoFile():
+    extractPoFiles("yelp", "fr")
+    assert os.path.isfile("/home/svasaika/.autotest/pofiles/fr.yelp.po")
+
+
+def test_runPofilter():
+    runPofilter("yelp", "fr")
+    assert os.path.isfile("/home/svasaika/.autotest/pofilter_files/filter.fr.yelp.po")
