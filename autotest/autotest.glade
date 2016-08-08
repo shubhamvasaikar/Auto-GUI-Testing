@@ -83,16 +83,16 @@
                 <property name="can_focus">False</property>
                 <property name="tearoff_title" translatable="yes">Select locale</property>
                 <items>
-                  <item id="1" translatable="yes">pt_BR</item>
-                  <item id="2" translatable="yes">zh_CN</item>
-                  <item id="3" translatable="yes">zh_TW</item>
-                  <item id="4" translatable="yes">ja_JP</item>
-                  <item id="5" translatable="yes">ko_KR</item>
-                  <item id="6" translatable="yes">fr_FR</item>
-                  <item id="7" translatable="yes">de_DE</item>
-                  <item id="8" translatable="yes">it_IT</item>
-                  <item id="9" translatable="yes">ru_RU</item>
-                  <item id="10" translatable="yes">es_ES</item>
+                  <item id="0" translatable="yes">pt_BR</item>
+                  <item id="1" translatable="yes">zh_CN</item>
+                  <item id="2" translatable="yes">zh_TW</item>
+                  <item id="3" translatable="yes">ja_JP</item>
+                  <item id="4" translatable="yes">ko_KR</item>
+                  <item id="5" translatable="yes">fr_FR</item>
+                  <item id="6" translatable="yes">de_DE</item>
+                  <item id="7" translatable="yes">it_IT</item>
+                  <item id="8" translatable="yes">ru_RU</item>
+                  <item id="9" translatable="yes">es_ES</item>
                 </items>
               </object>
               <packing>

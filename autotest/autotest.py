@@ -2,9 +2,21 @@ import gi
 import subprocess
 import checkgtk
 import checklocales
-import qualitychecks
+#import qualitychecks
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+
+locales = ['pt_BR',
+           'zh_CN',
+           'zh_TW',
+           'ja',
+           'ko',
+           'fr',
+           'de',
+           'it',
+           'ru',
+           'es'
+          ]
 
 
 class Handler:
@@ -27,11 +39,13 @@ class Handler:
         prgmNameEntry = builder.get_object("prgmName")
         localeCombo = builder.get_object("localeComboBox")
         displayTextView = builder.get_object("displayTests")
-        locale_absent = None
 
         # Set some frequently used variables
         program_name = prgmNameEntry.get_text()
         locale = localeCombo.get_active_text()
+        locale_id = localeCombo.get_active()
+        print locale_id
+        print locales[locale_id]
 
         autoTestWindow.present()
         displayTextView.get_buffer().set_text("")
@@ -49,14 +63,13 @@ class Handler:
 
         # Check the presence of l10n files for all locales
         if (builder.get_object("localeCheckBtn").get_active()):
-            locale_absent = checklocales.checkLocales(program_name)
-            if len(locale_absent) == 0:
+            locale_present = checklocales.checkLocales(program_name, locales[locale_id])
+            if locale_present:
                 end_iter = displayTextView.get_buffer().get_end_iter()
-                displayTextView.get_buffer().insert(end_iter, "All locales are present.\n")
+                displayTextView.get_buffer().insert(end_iter, "Required locale is present.\n")
             else:
-                locale_absent = ', '.join(locale_absent)
                 end_iter = displayTextView.get_buffer().get_end_iter()
-                displayTextView.get_buffer().insert(end_iter, "These locales are not present: "+locale_absent+"\n")
+                displayTextView.get_buffer().insert(end_iter, "Required locale is not present.\n")
 
         if (builder.get_object("pofilterCheckBtn").get_active()):
             qualitychecks.extractPoFiles(program_name, locale_absent)
