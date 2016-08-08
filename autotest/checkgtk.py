@@ -26,7 +26,7 @@ def checkGtk(program_name, locale_code):
 
 
 def test_checkGtk():
-    assert checkGtk('yelp') == 0  #Return a 0 exit status for a valid program.
+    assert checkGtk('yelp', 'fr_FR') == 0  #Return a 0 exit status for a valid program.
 
 
 def main():

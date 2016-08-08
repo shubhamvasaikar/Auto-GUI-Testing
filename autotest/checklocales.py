@@ -17,4 +17,4 @@ def checkLocales(program_name, locale):
 def test_checkLocales():
     locale_absent = checkLocales("yelp", "de")
     # locale_absent must be empty if all supported locales present.
-    assert len(locale_absent) == 0
+    assert locale_absent
