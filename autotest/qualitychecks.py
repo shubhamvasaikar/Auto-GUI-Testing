@@ -1,5 +1,6 @@
 import os
 import subprocess
+import polib
 
 
 def extractPoFiles(program_name, locale):
@@ -9,17 +10,17 @@ def extractPoFiles(program_name, locale):
 
     home_dir = os.path.expanduser('~')
     output_dir = home_dir+"/.autotest/pofiles"  # Path to store .po files
-    
+
     # Create directory for .po files.
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    input_path = "/usr/share/locale/"+locale+"/LC_MESSAGES/"+program_name+".mo"
-    output_path = output_dir+"/"+locale+"."+program_name+".po"
+    mo_path = "/usr/share/locale/"+locale+"/LC_MESSAGES/"+program_name+".mo"
+    po_path = output_dir+"/"+locale+"."+program_name+".po"
 
-    # msgunfmt is used to convert .mo files to .po files.
-    command = "msgunfmt "+input_path+" > "+output_path
-    subprocess.call(command, shell=True)
+    # Use polib to convert .mo files to .po files.
+    mo = polib.mofile(mo_path)
+    mo.save_as_pofile(po_path)
 
 
 def runPofilter(program_name, locale):
