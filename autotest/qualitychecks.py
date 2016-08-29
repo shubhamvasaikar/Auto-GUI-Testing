@@ -2,6 +2,9 @@ import os
 import subprocess
 import polib
 import shlex
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def extractPoFiles(program_name, locale):
@@ -15,6 +18,7 @@ def extractPoFiles(program_name, locale):
     # Create directory for .po files.
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+        log.info("Directory %s created.", output_dir)
 
     mo_path = "/usr/share/locale/"+locale+"/LC_MESSAGES/"+program_name+".mo"
     po_path = output_dir+"/"+locale+"."+program_name+".po"
@@ -22,6 +26,7 @@ def extractPoFiles(program_name, locale):
     # Use polib to convert .mo files to .po files.
     mo = polib.mofile(mo_path)
     mo.save_as_pofile(po_path)
+    log.info(".po file saved at %s.", po_path)
 
 
 def runPofilter(program_name, locale):
@@ -34,6 +39,7 @@ def runPofilter(program_name, locale):
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+        log.info("Directory %s created.", output_dir)
 
     input_path = input_dir+"/"+locale+"."+program_name+".po"
     output_path = output_dir+"/filter."+locale+"."+program_name+".po"

@@ -4,6 +4,9 @@ import getpass
 import subprocess
 import tarfile
 import shlex
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class ExtractPot:
@@ -19,7 +22,7 @@ class ExtractPot:
 
         self.user = getpass.getuser()
         self.home = ""
-        
+
         if self.user != "root":
             self.home = "/home/"+self.user
         else:
@@ -46,8 +49,10 @@ class ExtractPot:
         pkg_name = subprocess.check_output(['rpm -qa '+self.program_name+' --queryformat %{NAME}-%{VERSION}-%{RELEASE}'], shell=True)
         tar_name = subprocess.check_output(['rpm -qa '+self.program_name+' --queryformat %{NAME}-%{VERSION}'], shell=True)
         pkg_url = top_url+"/"+pkg_path+"/src/"+pkg_name+".src.rpm"
-        
+        log.info("Download URL: %s", pkg_url)
+
         urllib.urlretrieve(pkg_url, self.srpm_path)
+        log.info("src.rpm downloaded.")
 
         os.chdir(self.srpm_dir)
 
@@ -60,13 +65,15 @@ class ExtractPot:
 
         command = "tar -xf "+tar_name+".tar.xz"
         command = shlex.split(command)
-        subprocess.call(command)
-
+        subprocess.call(command) 
+        log.info("src.rpm unpacked in %s", self.srpm_dir)
+        
         os.chdir(self.srpm_dir+"/"+tar_name+"/po")
 
         command = "intltool-update -p"
         command = shlex.split(command)
         subprocess.call(command)
+        log.info("TODO insert command output here.")
 
         pot_name = self.program_name+".pot"
 
@@ -87,6 +94,7 @@ class ExtractPot:
         command = "intltool-update --dist --gettext-package="+self.program_name+" "+self.locale+"."+self.program_name
         command = shlex.split(command)
         subprocess.call(command)
+        log.info("TODO insert command output here.")
 
         command = "msgfmt --statistics "+po_file+" -o -"
         command = shlex.split(command)
