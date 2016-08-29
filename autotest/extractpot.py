@@ -84,3 +84,10 @@ class ExtractPot:
         os.chdir(os.path.abspath(os.path.dirname(__file__)))
         
         return err
+
+
+def test_extractPot():
+    e = ExtractPot("yelp", "de")
+    e.extractPot()
+    stats = e.getStats()
+    assert os.path.isfile(e.home+"/.autotest/pot_files/yelp.pot")
