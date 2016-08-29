@@ -9,7 +9,7 @@ def extractPoFiles(program_name, locale):
     """
 
     home_dir = os.path.expanduser('~')
-    output_dir = home_dir+"/.autotest/pofiles"  # Path to store .po files
+    output_dir = home_dir+"/.autotest/pot_files"  # Path to store .po files
 
     # Create directory for .po files.
     if not os.path.exists(output_dir):
@@ -28,7 +28,7 @@ def runPofilter(program_name, locale):
     """
 
     home_dir = os.path.expanduser('~')
-    input_dir = home_dir+"/.autotest/pofiles"  # Path for .po files
+    input_dir = home_dir+"/.autotest/pot_files"  # Path for .po files
     output_dir = home_dir+"/.autotest/pofilter_files"
 
     if not os.path.exists(output_dir):
@@ -45,7 +45,7 @@ def runPofilter(program_name, locale):
 
 def test_extractPoFile():
     extractPoFiles("yelp", "fr")
-    assert os.path.isfile("/home/svasaika/.autotest/pofiles/fr.yelp.po")
+    assert os.path.isfile("/home/svasaika/.autotest/pot_files/fr.yelp.po")
 
 
 def test_runPofilter():

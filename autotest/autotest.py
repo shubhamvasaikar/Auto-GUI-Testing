@@ -3,6 +3,7 @@ import subprocess
 import checkgtk
 import checklocales
 import qualitychecks
+import extractpot
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
@@ -32,6 +33,10 @@ class Handler:
     # To open Nautilus window to view pofilter files.
     def open_pofilter_dir(self, button):
         subprocess.Popen("nautilus ~/.autotest/pofilter_files", shell=True)
+
+    # To open Nautilus window to view .pot files.
+    def open_pot_dir(self, button):
+        subprocess.Popen("nautilus ~/.autotest/pot_files", shell=True)
 
     # Start program when the start button is clicked.
     def on_start(self, button):
@@ -77,6 +82,17 @@ class Handler:
             displayTextView.get_buffer().insert(end_iter, "Pofilter run successfully.\n")
             btnPofilter = builder.get_object("pofilterBtn")
             btnPofilter.set_sensitive(True)
+
+        # Extract .pot file and get translation stats.
+        if (builder.get_object("statCheckBtn").get_active()):
+            extract_pot = extractpot.ExtractPot(program_name, locales[locale_id])
+            extract_pot.extractPot()
+            stat = extract_pot.getStats()
+            end_iter = displayTextView.get_buffer().get_end_iter()
+            displayTextView.get_buffer().insert(end_iter, stat+"\n")
+            btnPotDir = builder.get_object("potDirBtn")
+            btnPotDir.set_sensitive(True)
+            
 
 builder = Gtk.Builder()
 builder.add_from_file("autotest.glade")
