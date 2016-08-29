@@ -1,6 +1,7 @@
 import os
 import subprocess
 import polib
+import shlex
 
 
 def extractPoFiles(program_name, locale):
@@ -40,7 +41,8 @@ def runPofilter(program_name, locale):
     # pofilter is obtained from translate-toolkit.
     # pofilter is used to run various quality checks on .po files.
     command = "pofilter -i "+input_path+" -o "+output_path
-    subprocess.call(command, shell=True)
+    command = shlex.split(command)
+    subprocess.call(command)
 
 
 def test_extractPoFile():

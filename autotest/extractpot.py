@@ -3,6 +3,8 @@ import os
 import getpass
 import subprocess
 import tarfile
+import shlex
+
 
 class ExtractPot:
     """This class is used to extract the pot file.
@@ -49,16 +51,22 @@ class ExtractPot:
 
         os.chdir(self.srpm_dir)
 
-        command = "rpm2cpio "+self.program_name+".src.rpm | cpio -idm"
-        subprocess.call(command, shell=True)
+        command = "rpm2cpio "+self.program_name+".src.rpm"
+        command = shlex.split(command)
+        rpm2cpio = subprocess.Popen(command, stdout=subprocess.PIPE)
+        command = "cpio -idm"
+        command = shlex.split(command)
+        subprocess.call(command, stdin=rpm2cpio.stdout)
 
         command = "tar -xf "+tar_name+".tar.xz"
-        subprocess.call(command, shell=True)
+        command = shlex.split(command)
+        subprocess.call(command)
 
         os.chdir(self.srpm_dir+"/"+tar_name+"/po")
 
         command = "intltool-update -p"
-        subprocess.call(command, shell=True)
+        command = shlex.split(command)
+        subprocess.call(command)
 
         pot_name = self.program_name+".pot"
 
@@ -75,10 +83,14 @@ class ExtractPot:
         os.chdir(path)
         po_file = self.locale+"."+self.program_name+".po"
         pot_name = self.program_name+".pot"
-
-        subprocess.call("intltool-update --dist --gettext-package="+self.program_name+" "+self.locale+"."+self.program_name, shell=True)
         
-        stats = subprocess.Popen("msgfmt --statistics "+po_file+" -o - > /dev/null", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        command = "intltool-update --dist --gettext-package="+self.program_name+" "+self.locale+"."+self.program_name
+        command = shlex.split(command)
+        subprocess.call(command)
+
+        command = "msgfmt --statistics "+po_file+" -o -"
+        command = shlex.split(command)
+        stats = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = stats.communicate()
         
         os.chdir(os.path.abspath(os.path.dirname(__file__)))
@@ -87,7 +99,7 @@ class ExtractPot:
 
 
 def test_extractPot():
-    e = ExtractPot("yelp", "de")
+    e = ExtractPot("yelp", "fr")
     e.extractPot()
     stats = e.getStats()
     assert os.path.isfile(e.home+"/.autotest/pot_files/yelp.pot")

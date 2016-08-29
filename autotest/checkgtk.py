@@ -1,5 +1,5 @@
 import subprocess
-
+import shlex
 
 def checkGtk(program_name, locale_code):
     """Starts a given program in the specified locale.
@@ -20,7 +20,10 @@ def checkGtk(program_name, locale_code):
     executable_path = executable_path.strip('\n')
 
     # Check program dependencies to check whether application is Gtk.
-    isGtk = subprocess.call("ldd " + executable_path + " | grep gtk", shell='True')
+    command = "ldd " + executable_path
+    command = shlex.split(command)
+    ldd = subprocess.Popen(command, stdout=subprocess.PIPE)
+    isGtk = subprocess.call(('grep', 'gtk'), stdin = ldd.stdout)
 
     return isGtk
 
