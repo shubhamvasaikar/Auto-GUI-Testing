@@ -1,6 +1,7 @@
 import subprocess
 import shlex
 import logging
+import os
 
 log = logging.getLogger(__name__)
 
@@ -14,7 +15,7 @@ def checkGtk(program_name, locale_code):
         command = program_name
         command = shlex.split(command)
         print command
-        program = subprocess.Popen(command, env={'LANG': locale_code})
+        program = subprocess.Popen(command, env={'LANG': locale_code, 'DISPLAY': os.environ['DISPLAY']})
     except OSError:
         log.error("Invalid application name", exc_info=True)
         isGtk = 1
