@@ -6,8 +6,12 @@ import os
 log = logging.getLogger(__name__)
 
 def checkGtk(program_name, locale_code):
-    """Starts a given program in the specified locale.
-       Checks whether given program_name is a GTK application or not.
+    """
+    Starts a given program in the specified locale.
+    Checks whether given program_name is a GTK application or not.
+
+    :param program_name: The program which is to be launched.
+    :param locale_code: The locale in which program is to be launched.
     """
 
     try:
@@ -43,7 +47,6 @@ def test_checkGtk():
 
 
 def main():
-
     program_name = raw_input("Enter program name: ")
     locale_code = raw_input("Enter locale code: ")
     isGtk = checkGtk(program_name, locale_code)
