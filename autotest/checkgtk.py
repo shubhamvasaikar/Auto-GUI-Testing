@@ -42,10 +42,6 @@ def checkGtk(program_name, locale_code):
     return isGtk
 
 
-def test_checkGtk():
-    assert checkGtk('yelp', 'fr_FR') == 0  #Return a 0 exit status for a valid program.
-
-
 def main():
     program_name = raw_input("Enter program name: ")
     locale_code = raw_input("Enter locale code: ")

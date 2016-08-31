@@ -13,13 +13,7 @@ def checkLocales(program_name, locale):
 
     if (os.path.isfile(path)):           # If file does not exist
         log.info(".mo file present.")
-        return True 
+        return True
     else:
         log.error(".mo file not present.")
         return False 
-
-
-def test_checkLocales():
-    locale_absent = checkLocales("yelp", "de")
-    # locale_absent must be true if locale is present.
-    assert locale_absent

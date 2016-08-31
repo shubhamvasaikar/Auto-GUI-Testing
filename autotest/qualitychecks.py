@@ -49,13 +49,3 @@ def runPofilter(program_name, locale):
     command = "pofilter -i "+input_path+" -o "+output_path
     command = shlex.split(command)
     subprocess.call(command)
-
-
-def test_extractPoFile():
-    extractPoFiles("yelp", "fr")
-    assert os.path.isfile("/home/svasaika/.autotest/pot_files/fr.yelp.po")
-
-
-def test_runPofilter():
-    runPofilter("yelp", "fr")
-    assert os.path.isfile("/home/svasaika/.autotest/pofilter_files/filter.fr.yelp.po")
