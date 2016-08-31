@@ -5,13 +5,17 @@ import os
 
 log = logging.getLogger(__name__)
 
-def checkGtk(program_name, locale_code):
+def checkGtk(program_name, locale):
     """
-    Starts a given program in the specified locale.
-    Checks whether given program_name is a GTK application or not.
+    Starts a given program in the specified ``locale_code``.
+    Checks whether given ``program_name`` is a ``GTK`` application or not.
 
     :param program_name: The program which is to be launched.
-    :param locale_code: The locale in which program is to be launched.
+    :param locale: The locale in which program is to be launched.
+    :type program_name: str
+    :type locale: str
+    :returns: ``0`` if ``program_name`` is ``GTK``
+    :rtype: int
     """
 
     try:
@@ -19,7 +23,7 @@ def checkGtk(program_name, locale_code):
         command = program_name
         command = shlex.split(command)
         print command
-        program = subprocess.Popen(command, env={'LANG': locale_code, 'DISPLAY': os.environ['DISPLAY']})
+        program = subprocess.Popen(command, env={'LANG': locale, 'DISPLAY': os.environ['DISPLAY']})
     except OSError:
         log.error("Invalid application name", exc_info=True)
         isGtk = 1
@@ -42,14 +46,14 @@ def checkGtk(program_name, locale_code):
     return isGtk
 
 
-def main():
-    program_name = raw_input("Enter program name: ")
-    locale_code = raw_input("Enter locale code: ")
-    isGtk = checkGtk(program_name, locale_code)
-    if isGtk == 0:
-        print "Application is GTK."
-    else:
-        print "Application is non-GTK."
-
-if __name__ == '__main__':
-    main()
+# def main():
+#     program_name = raw_input("Enter program name: ")
+#     locale_code = raw_input("Enter locale code: ")
+#     isGtk = checkGtk(program_name, locale_code)
+#     if isGtk == 0:
+#         print "Application is GTK."
+#     else:
+#         print "Application is non-GTK."
+#
+# if __name__ == '__main__':
+#     main()

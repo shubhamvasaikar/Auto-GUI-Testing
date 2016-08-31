@@ -8,8 +8,15 @@ log = logging.getLogger(__name__)
 
 
 def extractPoFiles(program_name, locale):
-    """ Generate all the .po files from the
-        .mo files.
+    """
+    Generate all the ``.po`` files from the ``.mo`` files. This is done by using
+    the ``polib`` library to read ``.mo`` files and convert them to ``.po``
+    files. The ``.po`` file is saved in ``~/.autotest/pot_files``.
+
+    :param program_name: The program which is to be launched.
+    :param locale: The locale in which program is to be launched.
+    :type program_name: str
+    :type locale: str
     """
 
     home_dir = os.path.expanduser('~')
@@ -30,7 +37,17 @@ def extractPoFiles(program_name, locale):
 
 
 def runPofilter(program_name, locale):
-    """ Run pofilter on all generated .po files.
+    """
+    Run ``pofilter`` on all generated .po files. ``pofilter`` is a utility
+    created by "Translate House" and included in their ``translate-toolkit``.
+    It contains various number of technical checks for ``.po`` files. This
+    function saves a file containing all the recommendations given by
+    ``pofilter`` in ``~/.autotest/pofilter_files``.
+
+    :param program_name: The program which is to be launched.
+    :param locale: The locale in which program is to be launched.
+    :type program_name: str
+    :type locale: str
     """
 
     home_dir = os.path.expanduser('~')

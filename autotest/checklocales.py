@@ -4,8 +4,16 @@ import logging
 log = logging.getLogger(__name__)
 
 def checkLocales(program_name, locale):
-    """ Check if l10n files are present
-        for all supported locales
+    """
+    This function checks if the ``.mo`` file is present for the ``program_name``.
+    The ``.mo`` file is the binary version of a ``.po`` file.
+
+    :param program_name: The program which is to be launched.
+    :param locale: The locale in which program is to be launched.
+    :type program_name: str
+    :type locale: str
+    :returns: ``True`` if file is present. ``False`` if absent.
+    :rtype: boolean
     """
 
     # Create a path for the .mo file.
@@ -16,4 +24,4 @@ def checkLocales(program_name, locale):
         return True
     else:
         log.error(".mo file not present.")
-        return False 
+        return False

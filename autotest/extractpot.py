@@ -10,10 +10,15 @@ log = logging.getLogger(__name__)
 
 
 class ExtractPot:
-    """This class is used to extract the pot file.
-       It works by downloading the src package from
-       Koji and unpacking the rpm and extracting the .pot file.
-       Then translation statistics are generated.
+    """
+    This class is used to extract the ``.pot`` file. It works by downloading the
+    src package from Koji and unpacking the rpm and extracting the ``.pot`` file.
+    Then translation statistics are generated using ``msgfmt``.
+
+    :param program_name: The program which is to be launched.
+    :param locale: The locale in which program is to be launched.
+    :type program_name: str
+    :type locale: str
     """
 
     def __init__(self, program_name, locale):
@@ -39,9 +44,12 @@ class ExtractPot:
 
 
     def extractPot(self):
-        """Download the src.rpm from Koji package repo.
-           Unpack the downloaded RPM and generate the .pot file.
-           .pot file is then moved to ~/.autotest/pot_files.
+        """
+        Downloads the src.rpm from Koji package repo.
+        Unpacks the downloaded RPM using ``rpm2cpio`` and ``cpio`` commands and
+        generate the .pot file using ``intltool-update``.
+        ``.pot`` file is then moved to ``~/.autotest/pot_files`` for further
+        processing.
         """
 
         top_url = "https://kojipkgs.fedoraproject.org/packages"
@@ -86,8 +94,12 @@ class ExtractPot:
 
 
     def getStats(self):
-        """Get the translaton statistics on the .po file
-           using the msgfmt utility.
+        """
+        Get the translation statistics on the ``.po`` file using the msgfmt
+        utility.
+
+        :returns: Translation statistics.
+        :rtype: str
         """
         path = self.home+"/.autotest/pot_files"
         os.chdir(path)
