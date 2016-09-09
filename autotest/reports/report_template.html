@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Report">
+    <meta name="author" content="Shubham P. Vasaikar">
+
+    <title>Autotest</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./bootstrap/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./bootstrap/theme.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Automated GUI Testing Report</h1>
+        <h3>
+          <span class="label label-default">Application: Yelp</span>
+          <span class="label label-danger">Locale: fr_FR</span>
+          <span class="label label-primary">Version: 3.10.11</span>
+          <span class="label label-success">Release: 1.fc24</span>
+          <span class="label label-info">OS: Fedora 24</span>
+          <span class="label label-warning">Arch: x86_64</span>
+      </h3>
+      </div>
+
+
+      <div class="page-header">
+        <h1>Prerequisite Checks</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Gnome Check</h3>
+            </div>
+            <div class="panel-body">
+              Yelp is a GNOME Application.
+              <span class="label label-success" style="float: right;">Success</span>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">PoFilter results.</h3>
+            </div>
+            <div class="panel-body">
+              Pofilter run successfully and output stored in ~/.autotest/pofilter_files.
+              <span class="label label-success" style="float: right;">Success</span>
+            </div>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-6">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Language Pack</h3>
+            </div>
+            <div class="panel-body">
+                Language pack for language fr_FR is installed for Yelp.
+                <span class="label label-success" style="float: right;">Success</span>
+            </div>
+          </div>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">.pot File</h3>
+            </div>
+            <div class="panel-body">
+              .pot file extracted from source and stored in ~/.autotest/pot_files.
+              <span class="label label-success" style="float: right;">Success</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-header">
+        <h1>Translation Statistics</h2>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 75%">750</div>
+            <div class="progress-bar progress-bar-warning" style="width: 2%">20</div>
+            <div class="progress-bar progress-bar-danger" style="width: 23%">230</div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="well">
+            <p>Total: 1000</p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <span class="label label-primary">&nbsp;&nbsp;</span>&nbsp;&nbsp;Translated
+        </div>
+        <div class="col-md-2">
+          <span class="label label-warning">&nbsp;&nbsp;</span>&nbsp;&nbsp;Fuzzy
+        </div>
+        <div class="col-md-2">
+          <span class="label label-danger">&nbsp;&nbsp;</span>&nbsp;&nbsp;Untranslated
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
