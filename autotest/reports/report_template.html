@@ -36,12 +36,12 @@
       <div class="jumbotron">
         <h1>Automated GUI Testing Report</h1>
         <h3>
-          <span class="label label-default">Application: Yelp</span>
-          <span class="label label-danger">Locale: fr_FR</span>
-          <span class="label label-primary">Version: 3.10.11</span>
-          <span class="label label-success">Release: 1.fc24</span>
-          <span class="label label-info">OS: Fedora 24</span>
-          <span class="label label-warning">Arch: x86_64</span>
+          <span class="label label-default">Application: {{app_name}}</span>
+          <span class="label label-danger">Locale: {{lang_code}}</span>
+          <span class="label label-primary">Version: {{app_ver}}</span>
+          <span class="label label-success">Release: {{app_rel}}</span>
+          <span class="label label-info">Arch: {{sys_arch}}</span>
+          <span class="label label-warning">Date: {{run_date}}</span>
       </h3>
       </div>
 
@@ -56,8 +56,13 @@
               <h3 class="panel-title">Gnome Check</h3>
             </div>
             <div class="panel-body">
-              Yelp is a GNOME Application.
-              <span class="label label-success" style="float: right;">Success</span>
+              {% if isGtk == 0 %}
+                {{app_name}} is a GNOME Application.
+                <span class="label label-success" style="float: right;">Success</span>
+              {% else %}
+                {{app_name}} is not a GNOME Application.
+                <span class="label label-danger" style="float: right;">Failed</span>
+              {% endif %}
             </div>
           </div>
           <div class="panel panel-primary">
@@ -76,8 +81,13 @@
               <h3 class="panel-title">Language Pack</h3>
             </div>
             <div class="panel-body">
-                Language pack for language fr_FR is installed for Yelp.
+              {% if po_exist == True %}
+                Language pack for language {{ lang_code }} is installed for {{ app_name }}.
                 <span class="label label-success" style="float: right;">Success</span>
+              {% else %}
+                Language pack for language {{ lang_code }} is not installed for {{ app_name }}.
+                <span class="label label-danger" style="float: right;">Failed</span>
+              {% endif %}
             </div>
           </div>
           <div class="panel panel-primary">
@@ -85,8 +95,13 @@
               <h3 class="panel-title">.pot File</h3>
             </div>
             <div class="panel-body">
-              .pot file extracted from source and stored in ~/.autotest/pot_files.
-              <span class="label label-success" style="float: right;">Success</span>
+              {% if pot_exist == True %}
+                .pot file extracted from source and stored in ~/.autotest/pot_files.
+                <span class="label label-success" style="float: right;">Success</span>
+              {% else %}
+                .pot file could not be extracted.
+                <span class="label label-danger" style="float: right;">Failed</span>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -98,21 +113,21 @@
       <div class="row">
         <div class="col-md-12">
           <div class="progress">
-            <div class="progress-bar progress-bar-success" style="width: 75%"></div>
-            <div class="progress-bar progress-bar-warning" style="width: 1%"></div>
-            <div class="progress-bar progress-bar-danger" style="width: 24%"></div>
+            <div class="progress-bar progress-bar-success" style="width: {{ per_translated }}%"></div>
+            <div class="progress-bar progress-bar-warning" style="width: {{ per_fuzzy }}%"></div>
+            <div class="progress-bar progress-bar-danger" style="width: {{ per_untranslated }}%"></div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-4">
-          <p class="text-center"><span class="label label-primary">&nbsp;&nbsp;</span>&nbsp;&nbsp;750 Translated</p>
+          <p class="text-center"><span class="label label-primary">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{ translated }} Translated</p>
         </div>
         <div class="col-md-4">
-          <p class="text-center"><span class="label label-warning">&nbsp;&nbsp;</span>&nbsp;&nbsp;10 Fuzzy</p>
+          <p class="text-center"><span class="label label-warning">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{ fuzzy }} Fuzzy</p>
         </div>
         <div class="col-md-4">
-          <p class="text-center"><span class="label label-danger">&nbsp;&nbsp;</span>&nbsp;&nbsp;240 Untranslated</p>
+          <p class="text-center"><span class="label label-danger">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{ untranslated }} Untranslated</p>
         </div>
       </div>
     </div> <!-- /container -->
