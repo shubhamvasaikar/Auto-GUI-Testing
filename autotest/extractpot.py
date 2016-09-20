@@ -101,6 +101,12 @@ class ExtractPot:
         :returns: Translation statistics.
         :rtype: str
         """
+        stat_dict = {
+            'translated': 0,
+            'fuzzy': 0,
+            'untranslated': 0,
+            'total': 0
+        }
         path = self.home+"/.autotest/pot_files"
         os.chdir(path)
         po_file = self.locale+"."+self.program_name+".po"
@@ -116,6 +122,12 @@ class ExtractPot:
         stats = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = stats.communicate()
 
+        stats = err.split(',')
+        for stat in stats:
+            number, name, m = stat.split()
+            stat_dict[name] = int(number)
+            stat_dict['total'] += int(number)
+
         os.chdir(os.path.abspath(os.path.dirname(__file__)))
 
-        return err
+        return stat_dict
