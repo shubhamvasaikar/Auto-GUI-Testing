@@ -129,9 +129,9 @@ class Handler:
             template_dict['translated'] = stat_dict['translated']
             template_dict['fuzzy'] = stat_dict['fuzzy']
             template_dict['untranslated'] = stat_dict['untranslated']
-            template_dict['per_translated'] = (stat_dict['translated'] / stat_dict['total']) * 100
-            template_dict['per_fuzzy'] = (stat_dict['fuzzy'] / stat_dict['total']) * 100
-            template_dict['per_untranslated'] = (stat_dict['untranslated'] / stat_dict['total']) * 100
+            template_dict['per_translated'] = (float(stat_dict['translated']) / float(stat_dict['total'])) * 100
+            template_dict['per_fuzzy'] = (float(stat_dict['fuzzy']) / float(stat_dict['total'])) * 100
+            template_dict['per_untranslated'] = (float(stat_dict['untranslated']) / float(stat_dict['total'])) * 100
 
         os.chdir(os.path.abspath(os.path.dirname(__file__)))
         build_report(template_dict)
