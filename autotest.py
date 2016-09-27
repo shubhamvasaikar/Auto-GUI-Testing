@@ -11,6 +11,7 @@ from autotest import template_dict
 import shlex
 import jinja2
 import datetime
+import os
 
 log = logging.getLogger(__name__)
 
@@ -24,16 +25,18 @@ locales = ['pt_BR',
            'it',
            'ru',
            'es'
-          ]
+           ]
 
 
 def build_report(template_dict):
-    jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader('/home/svasaika/Auto-GUI-Testing/autotest/reports'))
+    report_dir = os.path.abspath('reports')
+    print report_dir
+    jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(report_dir))
 
     template = jinja_env.get_template('report_template.html')
     report = template.render(template_dict)
 
-    with open('/home/svasaika/Auto-GUI-Testing/autotest/reports/report.html', 'w') as f:
+    with open(os.path.join(report_dir, 'report.html'), 'w') as f:
         f.write(report)
 
 
@@ -68,7 +71,7 @@ class Handler:
         locale = localeCombo.get_active_text()
         template_dict['lang_code'] = locale
         locale_id = localeCombo.get_active()
-        command = 'rpm -qa '+program_name+' --queryformat %{VERSION}\ %{RELEASE}\ %{ARCH}'
+        command = 'rpm -qa ' + program_name + ' --queryformat %{VERSION}\ %{RELEASE}\ %{ARCH}'
         command = shlex.split(command)
         ver, rel, arch = subprocess.check_output(command).split()
         template_dict['app_ver'] = ver
@@ -120,7 +123,7 @@ class Handler:
             extract_pot.extractPot()
             stat_dict = extract_pot.getStats()
             end_iter = displayTextView.get_buffer().get_end_iter()
-            displayTextView.get_buffer().insert(end_iter, str(stat_dict)+"\n")
+            displayTextView.get_buffer().insert(end_iter, str(stat_dict) + "\n")
             btnPotDir = builder.get_object("potDirBtn")
             btnPotDir.set_sensitive(True)
             template_dict['translated'] = stat_dict['translated']
@@ -130,6 +133,7 @@ class Handler:
             template_dict['per_fuzzy'] = (stat_dict['fuzzy'] / stat_dict['total']) * 100
             template_dict['per_untranslated'] = (stat_dict['untranslated'] / stat_dict['total']) * 100
 
+        os.chdir(os.path.abspath(os.path.dirname(__file__)))
         build_report(template_dict)
 
 builder = Gtk.Builder()
