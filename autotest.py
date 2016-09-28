@@ -30,7 +30,6 @@ locales = ['pt_BR',
 
 def build_report(template_dict):
     report_dir = os.path.abspath('reports')
-    print report_dir
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(report_dir))
 
     template = jinja_env.get_template('report_template.html')
