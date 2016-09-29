@@ -5,6 +5,7 @@ import os
 
 log = logging.getLogger(__name__)
 
+
 def checkGtk(program_name, locale):
     """
     Starts a given program in the specified ``locale_code``.
@@ -44,16 +45,3 @@ def checkGtk(program_name, locale):
     log.debug("Program GTK? command exited with %d", isGtk)
 
     return isGtk
-
-
-# def main():
-#     program_name = raw_input("Enter program name: ")
-#     locale_code = raw_input("Enter locale code: ")
-#     isGtk = checkGtk(program_name, locale_code)
-#     if isGtk == 0:
-#         print "Application is GTK."
-#     else:
-#         print "Application is non-GTK."
-#
-# if __name__ == '__main__':
-#     main()

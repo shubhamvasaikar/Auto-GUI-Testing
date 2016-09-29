@@ -4,14 +4,14 @@ import autotest.checkgtk as checkgtk
 import autotest.checklocales as checklocales
 import autotest.qualitychecks as qualitychecks
 import autotest.extractpot as extractpot
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
 import logging
 from autotest import template_dict
 import shlex
 import jinja2
 import datetime
 import os
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
 log = logging.getLogger(__name__)
 
@@ -84,7 +84,7 @@ class Handler:
         # Start the program in given locale.
         isGtk = 0
         isGtk = checkgtk.checkGtk(program_name, locale)
-        if (builder.get_object("gtkCheckBtn").get_active()):
+        if builder.get_object("gtkCheckBtn").get_active():
             if isGtk == 0:
                 end_iter = displayTextView.get_buffer().get_end_iter()
                 displayTextView.get_buffer().insert(end_iter, "Program is GTK.\n")
@@ -95,7 +95,7 @@ class Handler:
                 template_dict['isGtk'] = isGtk
 
         # Check the presence of l10n files for all locales.
-        if (builder.get_object("localeCheckBtn").get_active()):
+        if builder.get_object("localeCheckBtn").get_active():
             locale_present = checklocales.checkLocales(program_name, locales[locale_id])
             if locale_present:
                 end_iter = displayTextView.get_buffer().get_end_iter()
@@ -107,7 +107,7 @@ class Handler:
                 template_dict['po_exist'] = True
 
         # Extract the .po file and run pofilter on it.
-        if (builder.get_object("pofilterCheckBtn").get_active()):
+        if builder.get_object("pofilterCheckBtn").get_active():
             qualitychecks.extractPoFiles(program_name, locales[locale_id])
             qualitychecks.runPofilter(program_name, locales[locale_id])
             end_iter = displayTextView.get_buffer().get_end_iter()
@@ -117,7 +117,7 @@ class Handler:
             template_dict['pot_exist'] = True
 
         # Extract .pot file and get translation stats.
-        if (builder.get_object("statCheckBtn").get_active()):
+        if builder.get_object("statCheckBtn").get_active():
             extract_pot = extractpot.ExtractPot(program_name, locales[locale_id])
             extract_pot.extractPot()
             stat_dict = extract_pot.getStats()
@@ -125,7 +125,7 @@ class Handler:
             displayTextView.get_buffer().insert(end_iter, str(stat_dict) + "\n")
             btnPotDir = builder.get_object("potDirBtn")
             btnPotDir.set_sensitive(True)
-            template_dict['translated'] = stat_dict['translated']
+            template_dict['translated'] = stat_dict["translated"]
             template_dict['fuzzy'] = stat_dict['fuzzy']
             template_dict['untranslated'] = stat_dict['untranslated']
             template_dict['per_translated'] = (float(stat_dict['translated']) / float(stat_dict['total'])) * 100
