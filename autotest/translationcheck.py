@@ -30,10 +30,12 @@ def checkTranslations(program_name, po_dict):
 
     pyatspiwrapper.getAppStrings(app, li)
 
+    li = [x for x in li if x]
+
     for line in li:
         try:
             line = unicode(line)
-            if line.rstrip('.') in po_dict:
+            if line in po_dict:
                 print True,
                 translated.append(line)
             else:
@@ -41,11 +43,4 @@ def checkTranslations(program_name, po_dict):
         except:
             untranslated.append(line)
 
-    print("Translated:\n\n")
-    print translated
-
-    print("Untranslated:\n\n")
-    for i in untranslated:
-        print i
-
-    return li
+    return translated, untranslated
