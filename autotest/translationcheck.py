@@ -1,6 +1,7 @@
 import polib
 import os
 import pyatspiwrapper
+from fuzzywuzzy import fuzz, process
 
 
 def extractStringsFromPo(po_name, locale_code):
@@ -24,23 +25,30 @@ def extractStringsFromPo(po_name, locale_code):
 def checkTranslations(program_name, po_dict):
     app = pyatspiwrapper.getAppReference(program_name)
 
-    li = []
-    translated = []
-    untranslated = []
+    translated = {}
+    untranslated = {}
+    app_strings = pyatspiwrapper.getAppStrings(app)
 
-    pyatspiwrapper.getAppStrings(app, li)
+    localized = po_dict.keys()
 
-    li = [x for x in li if x]
+    # for line in app_strings:
+    #     try:
+    #         if line in localized:
+    #             translated.append(line)
+    #         else:
+    #             untranslated.append(line)
+    #     except:
+    #         untranslated.append(line)
 
-    for line in li:
+    for line in app_strings:
         try:
-            line = unicode(line)
-            if line in po_dict:
-                print True,
-                translated.append(line)
+            score = process.extractBests(line, localized, scorer=fuzz.ratio, limit=1)
+            if score[0][1] >= 65:
+                translated[line] = score
             else:
-                untranslated.append(line)
+                untranslated[line] = score
         except:
-            untranslated.append(line)
+            pass
 
+    print 'done.'
     return translated, untranslated
