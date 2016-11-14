@@ -1,9 +1,7 @@
 import pyatspi
-import time
 from pyatspi import utils, role
-import pyscreenshot
+import random
 import gi
-
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk
 from PIL import Image
@@ -49,13 +47,11 @@ def getWidgetLocations(app, count):
     height = size[1] + (8 - (size[1] % 8))
 
     app.queryComponent().grabFocus()
-    time.sleep(1)
     im = None
     if (size[0] > 1) and (size[1] > 1):
         im = takeScreenshots(x1, y1, width, height)
     if im:
-        im.save(app.name + str(count) + '.png')
-    time.sleep(1)
+        im.save(app.name + str(random.randint(1, 100)) + '.png')
 
     if app.getRole() == role.ROLE_PUSH_BUTTON:
         app.do_action(0)
