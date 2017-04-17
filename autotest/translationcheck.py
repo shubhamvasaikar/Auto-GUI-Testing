@@ -1,7 +1,14 @@
 import polib
 import os
 import pyatspiwrapper
-from fuzzywuzzy import fuzz, process
+import getpass
+
+unicode_ranges = {
+    'zh_CN': range(0x4E00, 0x9FFF),
+    'zh_TW': range(0x4E00, 0x9FFF),
+    'ko_KR': range(0x4E00, 0x9FFF),
+    'ru_RU': range(0x0400, 0x052F)
+}
 
 
 def extractStringsFromPo(po_name, locale_code):
@@ -22,33 +29,43 @@ def extractStringsFromPo(po_name, locale_code):
     return po_dict
 
 
-def checkTranslations(program_name, po_dict):
+def checkTranslations(program_name, locale_code):
+    user = getpass.getuser()
+    home = ""
+    if user != "root":
+        home = "/home/" + user
+    else:
+        home = "/root"
+    extracted_strings_dir = home + "/.autotest/extracted_strings"
+    if not os.path.exists(extracted_strings_dir):
+        os.makedirs(extracted_strings_dir)
+    extracted_strings_file = extracted_strings_dir + "/" + program_name + "." + locale_code
+
     app = pyatspiwrapper.getAppReference(program_name)
 
-    translated = {}
-    untranslated = {}
+    translated = []
+    untranslated = []
     app_strings = pyatspiwrapper.getAppStrings(app)
 
-    localized = po_dict.keys()
-
-    # for line in app_strings:
-    #     try:
-    #         if line in localized:
-    #             translated.append(line)
-    #         else:
-    #             untranslated.append(line)
-    #     except:
-    #         untranslated.append(line)
+    with open(extracted_strings_file, 'w') as f:
+        for line in app_strings:
+            f.write("%s\n" % line.encode('utf-8'))
 
     for line in app_strings:
-        try:
-            score = process.extractBests(line, localized, scorer=fuzz.ratio, limit=1)
-            if score[0][1] >= 65:
-                translated[line] = score
-            else:
-                untranslated[line] = score
-        except:
-            pass
+        flag = False
+        rep = line.encode("unicode_escape")
+        chars = rep.split('\u')
+        chars = chars[1:]
+        for code in chars:
+            try:
+                if int(code, 16) in unicode_ranges[locale_code]:
+                    translated.append(line)
+                    flag = True
+                    break
+            except:
+                continue
 
-    print 'done.'
-    return translated, untranslated
+        if not flag:
+            untranslated.append(line)
+
+    return untranslated
