@@ -2,6 +2,7 @@ import pyatspi
 from pyatspi import utils, role
 import random
 import gi
+import time
 gi.require_version('Gdk', '3.0')
 from gi.repository import Gdk
 from PIL import Image
@@ -24,8 +25,9 @@ def traverse(app, li):
 
 
 def getAppStrings(app):
-    # predicate = lambda x: x.getRole() == role.ROLE_PUSH_BUTTON
-    buttons = utils.findAllDescendants(app, lambda x: x.getRole() == role.ROLE_PUSH_BUTTON)
+    # predicate = lambda x: ((x.getRole() == role.ROLE_MENU) or (x.getRole() == role.ROLE_MENU_ITEM))
+    buttons = utils.findAllDescendants(app, lambda x: (
+    (x.getRole() == role.ROLE_MENU) or (x.getRole() == role.ROLE_MENU_ITEM)))
 
     for button in buttons:
         button.do_action(0)
@@ -39,6 +41,9 @@ def getAppStrings(app):
 
 
 def getWidgetLocations(app, count):
+    count += 1
+    if count > 5:
+        return
     location = app.queryComponent().getPosition(0)
     size = app.queryComponent().getSize()
     x1 = location[0]
@@ -47,9 +52,11 @@ def getWidgetLocations(app, count):
     height = size[1] + (8 - (size[1] % 8))
 
     app.queryComponent().grabFocus()
+    time.sleep(1)
     im = None
     if (size[0] > 1) and (size[1] > 1):
         im = takeScreenshots(x1, y1, width, height)
+        im = im.crop((0, 0, size[0], size[1]))
     if im:
         im.save(app.name + str(random.randint(1, 100)) + '.png')
 
@@ -57,7 +64,7 @@ def getWidgetLocations(app, count):
         app.do_action(0)
 
     for tree in app:
-        getWidgetLocations(tree, count + 1)
+        getWidgetLocations(tree, count)
 
 
 def takeScreenshots(x, y, width, height):
