@@ -2,7 +2,6 @@ import urllib
 import os
 import getpass
 import subprocess
-import tarfile
 import shlex
 import logging
 
@@ -41,7 +40,6 @@ class ExtractPot:
 
         if not os.path.exists(self.home+"/.autotest/srpm"):
             os.makedirs(self.home+"/.autotest/srpm")
-
 
     def extractPot(self):
         """
@@ -91,7 +89,6 @@ class ExtractPot:
         os.rename(pot_name, self.home+"/.autotest/pot_files/"+pot_name)
 
         os.chdir(os.path.abspath(os.path.dirname(__file__)))
-
 
     def getStats(self):
         """
