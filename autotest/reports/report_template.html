@@ -41,7 +41,7 @@
           <span class="label label-primary">Version: {{app_ver}}</span>
           <span class="label label-success">Release: {{app_rel}}</span>
           <span class="label label-info">Arch: {{sys_arch}}</span>
-          <span class="label label-warning">Date: {{run_date}}</span>
+          <span class="label label-warning">Date: {{rep_date}}</span>
       </h3>
       </div>
 
@@ -128,6 +128,30 @@
         </div>
         <div class="col-md-4">
           <p class="text-center"><span class="label label-danger">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{ untranslated }} Untranslated</p>
+        </div>
+      </div>
+      <div class="page-header">
+        <h1>Untranslated Strings</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <ul class="list-group">
+            {% for item in untranslated_list %}
+            <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <div class="page-header">
+        <h1>Rendering Errors</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <ul class="list-group">
+            {% for item in bad_renders_list %}
+            <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
+          </ul>
         </div>
       </div>
     </div> <!-- /container -->

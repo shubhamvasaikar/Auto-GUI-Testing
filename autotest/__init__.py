@@ -20,5 +20,7 @@ template_dict = {
     'untranslated': 0,
     'per_translated': 0,
     'per_fuzzy': 0,
-    'per_untranslated': 0
+    'per_untranslated': 0,
+    'untranslated_list': [],
+    'bad_renders_list': [],
 }
