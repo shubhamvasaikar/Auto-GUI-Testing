@@ -3,6 +3,7 @@
 import pyatspiwrapper
 import os
 import getpass
+import shutil
 from PIL import Image
 
 global count
@@ -27,6 +28,7 @@ class ExtractWidgets:
         self.extracted_strings = self.home + "/.autotest/extracted_strings/" + self.program_name + "." + self.locale
 
         if not os.path.exists(self.images_dir):
+            shutil.rmtree(self.images_dir)
             os.makedirs(self.images_dir)
 
     def extractWidgets(self):
