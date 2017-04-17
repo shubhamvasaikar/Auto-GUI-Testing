@@ -45,3 +45,8 @@ def checkGtk(program_name, locale):
     log.debug("Program GTK? command exited with %d", isGtk)
 
     return isGtk
+
+
+def kill(app_name):
+    command = "kill $(ps aux | grep '" + app_name + "' | awk '{print $2}')"
+    subprocess.call(command, shell=True)
