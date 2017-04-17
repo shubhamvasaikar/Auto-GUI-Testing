@@ -30,7 +30,7 @@ locales = {'pt_BR': 'pt_BR',
            }
 
 
-def build_report(template_dict):
+def build_report(app_name, template_dict):
     report_dir = os.path.abspath('./autotest/reports/')
     print report_dir
     jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(report_dir))
@@ -38,7 +38,7 @@ def build_report(template_dict):
     template = jinja_env.get_template('report_template.html')
     report = template.render(template_dict)
 
-    with open(os.path.join(report_dir, 'report.html'), 'w') as f:
+    with open(os.path.join(report_dir, app_name + ".report.html"), 'w') as f:
         f.write(report.encode('utf-8'))
 
 
